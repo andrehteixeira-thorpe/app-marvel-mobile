@@ -27,5 +27,8 @@ export const styles = StyleSheet.create({
   subtitle: {
     padding: 8,
     fontSize: 20
+  },
+  subtitleNotFound: {
+    padding: 8,
   }
 });

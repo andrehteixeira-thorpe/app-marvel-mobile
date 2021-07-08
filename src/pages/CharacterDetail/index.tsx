@@ -104,25 +104,30 @@ export default function Character({route}:{route:Params}){
               </>
             );
           })}
-          {comics.length ? (
-            <>
-              <Text style={styles.subtitle}>Present in {comics.length} comics:</Text> 
-              {comics.map(comic => {
-                return(
-                  <Card 
-                    key={comic.id} 
-                    id={comic.id} 
-                    name={comic.title}
-                    thumbnailPath={comic.thumbnail.path}
-                    thumbnailExtension={comic.thumbnail.extension}
-                  />
-                );
-              })}
-            </>
+          {loadingComics ? (
+            <Loading/>
           ) : (
-            <Text>Not found comics for this character</Text>
-          )}
-            
+            <>
+              {comics.length ? (
+                <>
+                  <Text style={styles.subtitle}>Present in {comics.length} comics:</Text> 
+                  {comics.map(comic => {
+                    return(
+                      <Card 
+                        key={comic.id} 
+                        id={comic.id} 
+                        name={comic.title}
+                        thumbnailPath={comic.thumbnail.path}
+                        thumbnailExtension={comic.thumbnail.extension}
+                      />
+                    );
+                  })}
+                </>
+              ) : (
+                <Text style={styles.subtitleNotFound}>Not found comics for this character</Text>
+              )}
+            </>
+          )} 
         </>
       )}
     </ScrollView>
