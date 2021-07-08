@@ -11,7 +11,8 @@ export const theme = {
     success: '#94C96C',
     error: '#E4676C',
     warning: '#E5C779',
-    info: '#7997E5'
+    info: '#7997E5',
+    header: '#222222'
   },
 
   fonts: {

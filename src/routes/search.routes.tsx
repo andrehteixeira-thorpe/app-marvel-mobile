@@ -2,8 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import LogoTitle from '../components/LogoHeader';
 
-import Characters from '../pages/Characters';
-import CharacterDetail from '../pages/CharacterDetail';
+import Search from '../pages/Search';
 
 import { theme } from '../global/styles/theme';
 
@@ -20,18 +19,11 @@ export default function CharacterRoutes() {
       }}
     >
       <Screen
-        name="Characters"
-        component={Characters}
+        name="Search"
+        component={Search}
         options={{ 
           headerTitle: (props:any) => <LogoTitle {...props} />,
           headerTitleAlign: 'center'
-        }}
-      />
-      <Screen
-        name="CharacterDetail"
-        component={CharacterDetail}
-        options={{
-          headerBackTitleVisible: false
         }}
       />
     </Navigator>

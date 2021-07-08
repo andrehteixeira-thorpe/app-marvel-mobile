@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native'
 import { useFonts } from 'expo-font';
 import { Marvel_400Regular, Marvel_700Bold } from '@expo-google-fonts/marvel';
 import AppLoading from 'expo-app-loading';
@@ -16,6 +17,9 @@ export default function App() {
   }
 
   return (
-    <TabRoutes />
+    <>
+      <StatusBar barStyle='light-content' />
+      <TabRoutes />
+    </>
   );
 }

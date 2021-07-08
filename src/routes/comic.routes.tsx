@@ -2,16 +2,16 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import LogoTitle from '../components/LogoHeader';
 
-import Characters from '../pages/Characters';
-import CharacterDetail from '../pages/CharacterDetail';
+import Comics from '../pages/Comics';
+import ComicDetail from '../pages/ComicDetail';
 
 import { theme } from '../global/styles/theme';
 
 const { Navigator, Screen } = createStackNavigator();
 
-export default function CharacterRoutes() {
+export default function ComicRoutes() {
   return(
-    <Navigator 
+    <Navigator
       screenOptions={{
         headerStyle:{
           backgroundColor: theme.colors.header
@@ -20,19 +20,16 @@ export default function CharacterRoutes() {
       }}
     >
       <Screen
-        name="Characters"
-        component={Characters}
+        name="Comics"
+        component={Comics}
         options={{ 
           headerTitle: (props:any) => <LogoTitle {...props} />,
           headerTitleAlign: 'center'
         }}
       />
       <Screen
-        name="CharacterDetail"
-        component={CharacterDetail}
-        options={{
-          headerBackTitleVisible: false
-        }}
+        name="ComicDetail"
+        component={ComicDetail}
       />
     </Navigator>
   );

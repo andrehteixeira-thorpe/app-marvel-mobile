@@ -4,8 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { theme } from '../global/styles/theme'
 
-import Character from '../pages/Character';
-import Comic from '../pages/Comic';
+import CharacterRoute from './character.routes';
+import ComicRoute from './comic.routes';
+import SearchRoute from './search.routes';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,14 +18,18 @@ export default function TabRoutes() {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName:any;
 
-            if (route.name === 'Character') {
+            if (route.name === 'Characters') {
               iconName = focused
                 ? 'person'
                 : 'person-outline';
-            } else if (route.name === 'Comic') {
+            } else if (route.name === 'Comics') {
               iconName = focused 
-              ? 'book' 
-              : 'book-outline';
+                ? 'book' 
+                : 'book-outline';
+            } else if (route.name === 'Search') {
+              iconName = focused 
+                ? 'ios-search' 
+                : 'ios-search-outline';
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -39,12 +44,16 @@ export default function TabRoutes() {
         }}
       >
         <Tab.Screen 
-          name="Character" 
-          component={Character} 
+          name="Characters" 
+          component={CharacterRoute} 
         />
         <Tab.Screen 
-          name="Comic" 
-          component={Comic} 
+          name="Comics" 
+          component={ComicRoute} 
+        />
+        <Tab.Screen 
+          name="Search" 
+          component={SearchRoute} 
         />
       </Tab.Navigator>
     </NavigationContainer>
