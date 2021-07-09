@@ -77,7 +77,6 @@ export default function Comic({route}:{route:Params}){
     setLoading(true);
     await api.get(`comics/${route.params.id}/characters`)
     .then(response => {
-      console.log(response.data.data.results);
       setCharacter(response.data.data.results);
       setLoading(false);
     })

@@ -34,8 +34,6 @@ export default function Character(){
     GetCharacters();
   }, [offset]);
 
-  console.log('Name ', name);
-
   async function GetCharacters() {
     setLoading(true);
     setTxtError('');

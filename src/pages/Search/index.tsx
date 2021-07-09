@@ -44,7 +44,6 @@ export default function Search() {
   const [msg, setMsg] = useState('Search for character or comic.');
 
   async function Search() {
-    console.log(searchText, 'in', activeFilter);
     setLoading(true);
     setSearchResult([]);
     setTxtError('');
@@ -62,7 +61,6 @@ export default function Search() {
       }
     })
     .then(response => {
-      console.log(response.data.data.results);
       setSearchResult(response.data.data.results);
       setMsg(!response.data.data.results.length ? 'No results for the search term.' : msg );
       setLoading(false);
