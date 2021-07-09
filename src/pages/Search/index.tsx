@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { 
   Button,
   ScrollView,
-  Keyboard,
   Text, 
   TextInput,
   View,
-  Platform,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert,
+  Platform
 } from 'react-native';
 import api from '../../services/api';
 import { Ionicons } from '@expo/vector-icons';
@@ -38,7 +38,6 @@ export default function Search() {
   const [loading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState<iSearch[]>([]);
   const [offset, setOffset] = useState(0);
-  const [name, setName] = useState('');
   const [txtError, setTxtError] = useState('');
   const [activeFilter, setActiveFilter] = useState('character');
   const [msg, setMsg] = useState('Search for character or comic.');
@@ -47,6 +46,11 @@ export default function Search() {
     setLoading(true);
     setSearchResult([]);
     setTxtError('');
+    if(!searchText){
+      AlertMsg('Atenção', 'Digite um termo para a busca');
+      setLoading(false);
+      return;
+    }
     await api.get(activeFilter === 'character' ? 'characters' : 'comics', {
       params: {
         nameStartsWith: activeFilter === 'character' 
@@ -73,6 +77,19 @@ export default function Search() {
       setLoading(false);
     })
   }
+
+  const AlertMsg = (title:string, msg:string) =>
+    Alert.alert(
+      title,
+      msg,
+      [
+        {
+          text: "Ok",
+          style: "cancel"
+        }
+      ],
+      { cancelable: false }
+    );
 
   return(
     <ScrollView 
@@ -104,6 +121,12 @@ export default function Search() {
           value={searchText}
           onChangeText={setSearchText}
         />
+        {Platform.OS === 'android' 
+          && searchText 
+              ? <Ionicons name="ios-close-circle" style={styles.clearButton} size={24} onPress={() => setSearchText('')} />
+              : <></>
+        }
+        
         <Button 
           color={theme.colors.primary}
           title='Search' 

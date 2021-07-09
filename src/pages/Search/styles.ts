@@ -53,5 +53,9 @@ export const styles = StyleSheet.create({
   },
   txtBtFilterActive: {
     color: theme.colors.white,
+  },
+  clearButton: {
+    color: theme.colors.gray,
+    marginRight: 12,
   }
 });

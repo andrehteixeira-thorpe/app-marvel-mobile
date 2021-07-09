@@ -87,63 +87,59 @@ export default function Character({route}:{route:Params}){
         flexGrow: 1
       }}
     >
-      {loading ? (
-        <Loading/>
-      ) : (
-        <>
-          {txtError ? (
-            <Message text={txtError}/>
-          ) : (
-            <>
-              {character.map(characterInfo => {
-                return(
-                  <View key={characterInfo.id}>
-                    <Image
-                      style={styles.image}
-                      source={{ 
-                        uri: `${characterInfo.thumbnail.path}.${characterInfo.thumbnail.extension}` 
-                      }} 
-                    />
-                    <View style={styles.info}>
-                      <Text style={styles.h1}>{characterInfo.name}</Text>
-                      {characterInfo.description 
-                        ? <Text style={styles.p}>{characterInfo.description}</Text> 
-                        : <Text style={styles.p}>No description available.</Text>
-                      }
+      {loading 
+        ? <Loading/>
+        : txtError 
+          ? <Message text={txtError}/>
+          : (
+              <>
+                {character.map(characterInfo => {
+                  return(
+                    <View key={characterInfo.id}>
+                      <Image
+                        style={styles.image}
+                        source={{ 
+                          uri: `${characterInfo.thumbnail.path}.${characterInfo.thumbnail.extension}` 
+                        }} 
+                      />
+                      <View style={styles.info}>
+                        <Text style={styles.h1}>{characterInfo.name}</Text>
+                        {characterInfo.description 
+                          ? <Text style={styles.p}>{characterInfo.description}</Text> 
+                          : <Text style={styles.p}>No description available.</Text>
+                        }
+                      </View>
                     </View>
-                  </View>
-                );
-              })}
-              {loadingComics ? (
-                <Loading/>
-              ) : (
-                <>
-                  {comics.length ? (
-                    <>
-                      <Text style={styles.subtitle}>Present in {comics.length} {comics.length > 1 ? 'comics' : 'comic'} :</Text> 
-                      {comics.map(comic => {
-                        return(
-                          <Card 
-                            key={comic.id} 
-                            id={comic.id} 
-                            name={comic.title}
-                            thumbnailPath={comic.thumbnail.path}
-                            thumbnailExtension={comic.thumbnail.extension}
-                            type='Comic'
-                            origin='Character'
-                          />
-                        );
-                      })}
-                    </>
-                  ) : (
-                    <Text style={styles.subtitleNotFound}>Comics not found for this character</Text>
-                  )}
-                </>
-              )}
-            </>
-          )}
-        </>
-      )}
+                  );
+                })}
+                {loadingComics 
+                  ? <Loading/>
+                  : comics.length 
+                    ? (
+                        <>
+                          <Text style={styles.subtitle}>
+                            Present in {comics.length} {comics.length > 1 ? 'comics' : 'comic'} :
+                          </Text> 
+                          {comics.map(comic => {
+                            return(
+                              <Card 
+                                key={comic.id} 
+                                id={comic.id} 
+                                name={comic.title}
+                                thumbnailPath={comic.thumbnail.path}
+                                thumbnailExtension={comic.thumbnail.extension}
+                                type='Comic'
+                                origin='Character'
+                              />
+                            );
+                          })}
+                        </>
+                      ) 
+                    :  <Text style={styles.subtitleNotFound}>Comics not found for this character</Text>
+                }
+              </>
+            )
+      }
     </ScrollView>
   );
 }

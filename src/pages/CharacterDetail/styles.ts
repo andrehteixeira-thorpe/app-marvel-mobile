@@ -32,7 +32,8 @@ export const styles = StyleSheet.create({
     padding: 8,
   },
   subtitle: {
-    padding: 8,
+    margin: 8,
+    marginVertical: 16,
     fontSize: 20
   },
   subtitleNotFound: {

@@ -95,68 +95,62 @@ export default function Comic({route}:{route:Params}){
         flexGrow: 1
       }}
     >
-      {loading ? (
-        <Loading/>
-      ) : (
-        <>
-          {txtError ? (
-            <Message text={txtError}/>
-          ) : (
-            <>
-              {comics.map(comic => {
-                return(
-                  <View key={comic.id}>
-                    <Image
-                      style={styles.image}
-                      source={{ 
-                        uri: `${comic.thumbnail.path}.${comic.thumbnail.extension}` 
-                      }} 
-                    />
-                    <View style={styles.info}>
-                      <Text style={styles.h1}>{comic.title}</Text>
-                      {comic.description 
-                        ? <Text style={styles.p}>{comic.description}</Text> 
-                        : <Text style={styles.p}>No description available.</Text>
-                      }
-                      {comic.prices[0].price ? (
-                        <Text style={styles.pBold}>
-                          Print price: $ {comic.prices[0].price}
-                        </Text>
-                      ) : <></>}
-                    </View>
-                  </View>
-                );
-              })}
-              {loadingComics ? (
-                <Loading/>
-              ) : (
+      {loading 
+        ? <Loading/>
+        : txtError 
+            ? <Message text={txtError}/>
+            : (
                 <>
-                  {character.length ? (
-                    <>
-                      <Text style={styles.subtitle}>{character.length} {character.length > 1 ? 'characters' : 'character'} present in this comic:</Text> 
-                      {character.map(characterInfo => {
-                        return(
-                          <Card 
-                            key={characterInfo.id} 
-                            id={characterInfo.id} 
-                            name={characterInfo.name}
-                            thumbnailPath={characterInfo.thumbnail.path}
-                            thumbnailExtension={characterInfo.thumbnail.extension}
-                            type='Character'
-                            origin='Comic'
-                          />
-                        );
-                      })}
-                    </>
-                  ) : (
-                    <Text style={styles.subtitleNotFound}>Characters not found for this comic</Text>
-                  )}
+                  {comics.map(comic => {
+                    return(
+                      <View key={comic.id}>
+                        <Image
+                          style={styles.image}
+                          source={{ 
+                            uri: `${comic.thumbnail.path}.${comic.thumbnail.extension}` 
+                          }} 
+                        />
+                        <View style={styles.info}>
+                          <Text style={styles.h1}>{comic.title}</Text>
+                          {comic.description 
+                            ? <Text style={styles.p}>{comic.description}</Text> 
+                            : <Text style={styles.p}>No description available.</Text>
+                          }
+                          {comic.prices[0].price ? (
+                            <Text style={styles.pBold}>
+                              Print price: $ {comic.prices[0].price}
+                            </Text>
+                          ) : <></>}
+                        </View>
+                      </View>
+                    );
+                  })}
+                  {loadingComics 
+                    ? <Loading/>
+                    : character.length 
+                      ? (
+                          <>
+                            <Text style={styles.subtitle}>{character.length} {character.length > 1 ? 'characters' : 'character'} present in this comic:</Text> 
+                            {character.map(characterInfo => {
+                              return(
+                                <Card 
+                                  key={characterInfo.id} 
+                                  id={characterInfo.id} 
+                                  name={characterInfo.name}
+                                  thumbnailPath={characterInfo.thumbnail.path}
+                                  thumbnailExtension={characterInfo.thumbnail.extension}
+                                  type='Character'
+                                  origin='Comic'
+                                />
+                              );
+                            })}
+                          </>
+                        ) 
+                      : <Text style={styles.subtitleNotFound}>Characters not found for this comic</Text>
+                    }
                 </>
-              )}
-            </>
-          )}
-        </>
-      )}
+              )
+      }
     </ScrollView>
   );
 }
