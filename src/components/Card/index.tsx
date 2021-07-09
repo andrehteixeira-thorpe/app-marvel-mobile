@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Text, 
   Image,
@@ -21,6 +21,7 @@ type Character = {
 
 export default function Card(props:Character) {
   const navigation = useNavigation();
+  const [name, setName] = useState(props.name);
   return(
     <TouchableOpacity 
       style={styles.card}
@@ -49,7 +50,7 @@ export default function Card(props:Character) {
         }} 
       />
       <View style={styles.cardContent}>
-        <Text style={styles.characterName}>{props.name}</Text>
+        <Text style={styles.characterName}>{name}</Text>
       </View>
       <Entypo name="chevron-right" size={24} color="black" />
     </TouchableOpacity>

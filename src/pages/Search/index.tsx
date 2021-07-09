@@ -20,9 +20,10 @@ import { theme } from '../../global/styles/theme';
 import Card from '../../components/Card';
 
 
-interface iCharacter{
+interface iSearch{
   id: number;
   name: string;
+  title: string;
   description: string;
   thumbnail: {
     path: string;
@@ -30,44 +31,44 @@ interface iCharacter{
   }
 }
 
-const LIMIT = 20;
+const LIMIT = 100;
 
 export default function Search() {
   const [searchText, setSearchText] = useState('');
   const [loading, setLoading] = useState(false);
-  const [characters, setCharacters] = useState<iCharacter[]>([]);
+  const [searchResult, setSearchResult] = useState<iSearch[]>([]);
   const [offset, setOffset] = useState(0);
   const [name, setName] = useState('');
   const [txtError, setTxtError] = useState('');
   const [activeFilter, setActiveFilter] = useState('character');
+  const [msg, setMsg] = useState('Search for character or comic.');
 
-
-  function Teste() {
+  async function Search() {
     console.log(searchText, 'in', activeFilter);
-    setName(searchText);
-    setOffset(0);
-    // SearchCharacters();
-    // Keyboard.dismiss();
-  }
-
-  async function SearchCharacters() {
     setLoading(true);
-    setCharacters([]);
+    setSearchResult([]);
     setTxtError('');
-    await api.get('characters', {
+    await api.get(activeFilter === 'character' ? 'characters' : 'comics', {
       params: {
-        nameStartsWith: name === '' ? null : name,
-        orderBy: 'name',
-        limit: LIMIT, // Testar pesquisa sem limit
+        nameStartsWith: activeFilter === 'character' 
+                          ? searchText 
+                          : null,
+        titleStartsWith:  activeFilter === 'comic' 
+                          ? searchText 
+                          : null,
+        orderBy: activeFilter === 'character' ? 'name' : 'title',
+        limit: LIMIT,
         offset: offset
       }
     })
     .then(response => {
-      setCharacters(response.data.data.results);
+      console.log(response.data.data.results);
+      setSearchResult(response.data.data.results);
+      setMsg(!response.data.data.results.length ? 'No results for the search term' : msg );
       setLoading(false);
     })
     .catch(error => {
-      console.log(error.request);
+      console.log(error);
       if(error.request.status === 429){
         setTxtError('You have exceeded your rate limit in marvel API. Please try again later')
       }
@@ -96,7 +97,7 @@ export default function Search() {
           style={styles.input}
           returnKeyLabel='search'
           returnKeyType='search'
-          onSubmitEditing={Teste}
+          onSubmitEditing={Search}
           placeholder={
             activeFilter === 'character' 
               ? "Search character" 
@@ -108,9 +109,7 @@ export default function Search() {
         <Button 
           color={theme.colors.primary}
           title='Search' 
-          onPress={() => {
-           Teste()
-          }} 
+          onPress={ Search } 
         />
       </View>
       <View style={styles.filter}>
@@ -151,12 +150,27 @@ export default function Search() {
           </Text>
         </TouchableOpacity>
       </View>
-
-      {txtError 
-        ? <Message text={txtError} /> 
-        : characters.length 
-          ? <Text>Com character</Text>
-          : <Message text='Search for character or comic.'/>
+      
+      
+      {loading 
+      ? <Loading/>
+      : txtError 
+          ? <Message text={txtError} /> 
+          : searchResult.length 
+            ? searchResult.map(result => {
+                return(
+                  <Card 
+                    key={result.id} 
+                    id={result.id}
+                    name={activeFilter === 'character' ? result.name : result.title}
+                    thumbnailPath={result.thumbnail.path}
+                    thumbnailExtension={result.thumbnail.extension}
+                    type={activeFilter === 'character' ? 'Character' : 'Comic'}
+                    origin='Search'
+                  />
+                );
+              })
+            : <Message text={msg} />
       }
       
     </ScrollView>
