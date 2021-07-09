@@ -121,7 +121,7 @@ export default function Character({route}:{route:Params}){
                 <>
                   {comics.length ? (
                     <>
-                      <Text style={styles.subtitle}>Present in {comics.length} comics:</Text> 
+                      <Text style={styles.subtitle}>Present in {comics.length} {comics.length > 1 ? 'comics' : 'comic'} :</Text> 
                       {comics.map(comic => {
                         return(
                           <Card 

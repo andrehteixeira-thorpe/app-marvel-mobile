@@ -49,7 +49,6 @@ export default function Card(props:Character) {
       />
       <View style={styles.cardContent}>
         <Text style={styles.characterName}>{props.name}</Text>
-        <Text style={styles.characterName}>{props.type}</Text>
       </View>
       <Entypo name="chevron-right" size={24} color="black" />
     </TouchableOpacity>
