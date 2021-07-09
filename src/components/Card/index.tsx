@@ -33,6 +33,7 @@ export default function Card(props:Character) {
         ) : (
           navigation.navigate(props.type === 'Character' ? 'Characters' : 'Comics', {
             screen: props.type === 'Character' ? 'CharacterDetail' : 'ComicDetail',
+            initial: false,
             params: { 
               id: props.id,
               name: props.name 
