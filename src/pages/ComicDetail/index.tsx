@@ -119,11 +119,11 @@ export default function Comic({route}:{route:Params}){
                         ? <Text style={styles.p}>{comic.description}</Text> 
                         : <Text style={styles.p}>No description available.</Text>
                       }
-                      {comic.prices[0].price && (
+                      {comic.prices[0].price ? (
                         <Text style={styles.pBold}>
                           Print price: $ {comic.prices[0].price}
                         </Text>
-                      )}
+                      ) : <></>}
                     </View>
                   </View>
                 );

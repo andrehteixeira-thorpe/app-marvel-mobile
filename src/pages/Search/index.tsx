@@ -64,7 +64,7 @@ export default function Search() {
     .then(response => {
       console.log(response.data.data.results);
       setSearchResult(response.data.data.results);
-      setMsg(!response.data.data.results.length ? 'No results for the search term' : msg );
+      setMsg(!response.data.data.results.length ? 'No results for the search term.' : msg );
       setLoading(false);
     })
     .catch(error => {

@@ -52,7 +52,7 @@ export default function Character({route}:{route:Params}){
     setLoading(true);
     await api.get(`characters/${route.params.id}`)
     .then(response => {
-      console.log(response.data.data.results);
+      // console.log(response.data.data.results);
       setCharacter(response.data.data.results);
       setLoading(false);
     })
@@ -69,6 +69,7 @@ export default function Character({route}:{route:Params}){
     setLoadingComics(true);
     await api.get(`characters/${route.params.id}/comics`) 
     .then(response => {
+      console.log(response.data);
       setComics(response.data.data.results);
       setLoadingComics(false);
     })
