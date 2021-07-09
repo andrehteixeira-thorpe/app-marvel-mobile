@@ -47,7 +47,7 @@ export default function Search() {
     setSearchResult([]);
     setTxtError('');
     if(!searchText){
-      AlertMsg('Atenção', 'Digite um termo para a busca');
+      AlertMsg('No search term', 'Please enter a search term.');
       setLoading(false);
       return;
     }

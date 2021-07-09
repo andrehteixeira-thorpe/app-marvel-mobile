@@ -49,7 +49,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 44,
-    backgroundColor: theme.colors.black
+    backgroundColor: theme.colors.black,
+    borderBottomWidth: 2,
+    borderBottomColor: theme.colors.primary
   },
   txtBtFilterActive: {
     color: theme.colors.white,
