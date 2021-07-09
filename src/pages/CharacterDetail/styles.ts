@@ -14,7 +14,14 @@ export const styles = StyleSheet.create({
   p: {
     color: theme.colors.black,
     fontSize: 15,
-    lineHeight: 21
+    lineHeight: 21,
+    marginBottom: 5,
+  },
+  pBold: {
+    color: theme.colors.black,
+    fontSize: 15,
+    lineHeight: 21,
+    fontWeight: 'bold'
   },
   image: {
     width: '100%',

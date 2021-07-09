@@ -51,10 +51,10 @@ export default function TabRoutes() {
           name="Comics" 
           component={ComicRoute} 
         />
-        <Tab.Screen 
+        {/* <Tab.Screen 
           name="Search" 
           component={SearchRoute} 
-        />
+        /> */}
       </Tab.Navigator>
     </NavigationContainer>
   );

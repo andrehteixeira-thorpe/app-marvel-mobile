@@ -13,8 +13,10 @@ import { Entypo } from '@expo/vector-icons';
 type Character = {
   id: number;
   name: string;
-  thumbnailPath: string
-  thumbnailExtension: string
+  thumbnailPath: string;
+  thumbnailExtension: string;
+  type: string;
+  origin: string;
 }
 
 export default function Card(props:Character) {
@@ -22,10 +24,22 @@ export default function Card(props:Character) {
   return(
     <TouchableOpacity 
       style={styles.card}
-      onPress={ () => navigation.navigate('CharacterDetail', {
-        id: props.id,
-        name: props.name
-      })}
+      onPress={ () => {
+        props.origin === props.type ? (
+          navigation.navigate(props.type === 'Character' ? 'CharacterDetail' : 'ComicDetail', {
+            id: props.id,
+            name: props.name 
+          })
+        ) : (
+          navigation.navigate(props.type === 'Character' ? 'Characters' : 'Comics', {
+            screen: props.type === 'Character' ? 'CharacterDetail' : 'ComicDetail',
+            params: { 
+              id: props.id,
+              name: props.name 
+            },
+          })
+        )
+      }}
     >
       <Image
         style={styles.cardImage}
@@ -35,6 +49,7 @@ export default function Card(props:Character) {
       />
       <View style={styles.cardContent}>
         <Text style={styles.characterName}>{props.name}</Text>
+        <Text style={styles.characterName}>{props.type}</Text>
       </View>
       <Entypo name="chevron-right" size={24} color="black" />
     </TouchableOpacity>

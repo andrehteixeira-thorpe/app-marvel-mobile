@@ -30,6 +30,9 @@ export default function ComicRoutes() {
       <Screen
         name="ComicDetail"
         component={ComicDetail}
+        options={{
+          headerBackTitleVisible: false
+        }}
       />
     </Navigator>
   );

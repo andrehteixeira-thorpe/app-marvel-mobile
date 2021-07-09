@@ -5,6 +5,7 @@ import api from '../../services/api';
 import { styles } from './styles';
 import Loading from '../../components/Loading';
 import Card from '../../components/Card';
+import Message from '../../components/Message';
 
 interface Character{
   id: number;
@@ -39,12 +40,13 @@ export default function Character({route}:{route:Params}){
   const [loadingComics, setLoadingComics] = useState(false);
   const [character, setCharacter] = useState<Character[]>([]);
   const [comics, setComics] = useState<Comics[]>([]);
+  const [txtError, setTxtError] = useState('');
 
   useEffect(() => {
     navigation.setOptions({ title: route.params.name }); 
     GetCharacter();
     GetComics();
-  }, []);
+  }, [route.params.id]);
   
   async function GetCharacter(){
     setLoading(true);
@@ -56,6 +58,9 @@ export default function Character({route}:{route:Params}){
     })
     .catch(error => {
       console.log(error);
+      if(error.request.status === 429){
+        setTxtError('You have exceeded your rate limit in marvel API. Please try again later')
+      }
       setLoading(false);
     })
   }
@@ -69,6 +74,9 @@ export default function Character({route}:{route:Params}){
     })
     .catch(error => {
       console.log(error);
+      if(error.request.status === 429){
+        setTxtError('You have exceeded your rate limit in marvel API. Please try again later')
+      }
       setLoadingComics(false);
     })
   }
@@ -84,50 +92,57 @@ export default function Character({route}:{route:Params}){
         <Loading/>
       ) : (
         <>
-          {character.map(characterInfo => {
-            return(
-              <>
-                <Image
-                  key={characterInfo.id}
-                  style={styles.image}
-                  source={{ 
-                    uri: `${characterInfo.thumbnail.path}.${characterInfo.thumbnail.extension}` 
-                  }} 
-                />
-                <View style={styles.info}>
-                  <Text style={styles.h1}>{characterInfo.name}</Text>
-                  {characterInfo.description 
-                    ? <Text style={styles.p}>{characterInfo.description}</Text> 
-                    : <Text style={styles.p}>No description available.</Text>
-                  }
-                </View>
-              </>
-            );
-          })}
-          {loadingComics ? (
-            <Loading/>
+          {txtError ? (
+            <Message text={txtError}/>
           ) : (
             <>
-              {comics.length ? (
-                <>
-                  <Text style={styles.subtitle}>Present in {comics.length} comics:</Text> 
-                  {comics.map(comic => {
-                    return(
-                      <Card 
-                        key={comic.id} 
-                        id={comic.id} 
-                        name={comic.title}
-                        thumbnailPath={comic.thumbnail.path}
-                        thumbnailExtension={comic.thumbnail.extension}
-                      />
-                    );
-                  })}
-                </>
+              {character.map(characterInfo => {
+                return(
+                  <View key={characterInfo.id}>
+                    <Image
+                      style={styles.image}
+                      source={{ 
+                        uri: `${characterInfo.thumbnail.path}.${characterInfo.thumbnail.extension}` 
+                      }} 
+                    />
+                    <View style={styles.info}>
+                      <Text style={styles.h1}>{characterInfo.name}</Text>
+                      {characterInfo.description 
+                        ? <Text style={styles.p}>{characterInfo.description}</Text> 
+                        : <Text style={styles.p}>No description available.</Text>
+                      }
+                    </View>
+                  </View>
+                );
+              })}
+              {loadingComics ? (
+                <Loading/>
               ) : (
-                <Text style={styles.subtitleNotFound}>Not found comics for this character</Text>
+                <>
+                  {comics.length ? (
+                    <>
+                      <Text style={styles.subtitle}>Present in {comics.length} comics:</Text> 
+                      {comics.map(comic => {
+                        return(
+                          <Card 
+                            key={comic.id} 
+                            id={comic.id} 
+                            name={comic.title}
+                            thumbnailPath={comic.thumbnail.path}
+                            thumbnailExtension={comic.thumbnail.extension}
+                            type='Comic'
+                            origin='Character'
+                          />
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <Text style={styles.subtitleNotFound}>Comics not found for this character</Text>
+                  )}
+                </>
               )}
             </>
-          )} 
+          )}
         </>
       )}
     </ScrollView>

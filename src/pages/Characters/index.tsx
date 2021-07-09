@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { 
-  Button,
   FlatList,
-  Keyboard,
   Text, 
-  TextInput,
   View,
   Platform,
-  TouchableOpacity
 } from 'react-native';
-import api from '../../services/api'
-import { Ionicons } from '@expo/vector-icons';
-
+import api from '../../services/api';
 import Loading from '../../components/Loading';
-
-import { styles } from './styles';
-import { theme } from '../../global/styles/theme';
 import Card from '../../components/Card';
 import Message from '../../components/Message';
+import { styles } from './styles';
 
 interface iCharacter{
   id: number;
@@ -32,7 +24,6 @@ interface iCharacter{
 const LIMIT = 20;
 
 export default function Character(){
-  const [searchText, setSearchText] = useState('');
   const [loading, setLoading] = useState(false);
   const [characters, setCharacters] = useState<iCharacter[]>([]);
   const [offset, setOffset] = useState(0);
@@ -82,6 +73,8 @@ export default function Character(){
       name={item.name}
       thumbnailPath={item.thumbnail.path}
       thumbnailExtension={item.thumbnail.extension}
+      type='Character'
+      origin='Character'
     />
   );
 

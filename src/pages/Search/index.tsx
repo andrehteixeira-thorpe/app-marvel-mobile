@@ -143,25 +143,21 @@ export default function Search() {
           <Text 
             style={
               activeFilter === 'comic' 
-              ? styles.txtBtFilterActive 
-              : styles.txtBtFilter
+                ? styles.txtBtFilterActive 
+                : styles.txtBtFilter
             }
           >
             Comic
           </Text>
         </TouchableOpacity>
       </View>
-      {txtError ? (
-        <Message text={txtError} />
-      ) : (
-        <>
-          {characters.length ? (
-            <Text>Com character</Text>
-          ) : (
-            <Message text='Search for character or comic.'/>
-          )}
-        </>
-      )}
+
+      {txtError 
+        ? <Message text={txtError} /> 
+        : characters.length 
+          ? <Text>Com character</Text>
+          : <Message text='Search for character or comic.'/>
+      }
       
     </ScrollView>
   );
